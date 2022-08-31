@@ -19,7 +19,7 @@ def register_user():
         db.session.commit()
         return jsonify({"created": True, "user": new_user.serialize()}), 200
     else:
-        return jsonify({"created": False, "msg": "Falta información"}), 200
+        return jsonify({"created": False, "msg": "Falta información"}), 400
 
 @api.route("/login", methods=["POST"])
 def login_user():

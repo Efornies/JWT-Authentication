@@ -3,18 +3,23 @@ import { useHistory } from "react-router-dom";
 
 export const Register = () => {
   const [user, setUser] = useState({});
-  const history = useHistory();
+  const [error, setError] = useState ( null);
 
   const sendUserInfo = async () => {
+    if (user.email != null && user.email.trim() != "" ){
+      setError(null)
     const response = await fetch(
-      "https://3001-4geeksacade-reactflaskh-a7prqmjgfgs.ws-eu63.gitpod.io/api/register",
+      "https://3001-efornies-jwtauthenticat-1nyk8c8ihtj.ws-eu63.gitpod.io/api/register",
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
-      }
-    );
+      });
     const data = await response.json();
+    
+  } else {
+      setError("Bad Info");
+  }
     if (data.created) {
       history.push("/login");
     }
@@ -43,6 +48,8 @@ export const Register = () => {
           Register new user
         </button>
       </div>
+      {error != null ? <h3 className="text-danger"> {error}</h3> : null}
     </div>
+   
   );
 };
